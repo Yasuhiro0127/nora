@@ -1,6 +1,6 @@
 <?php
 $host = 'localhost';
-$dbname = 'noralive';
+$dbname = 'xs980818_noralive';
 $username = 'xs980818';
 $password = 'pokopixgvp';
 
