@@ -1,9 +1,10 @@
 <?php
 // DB接続
 $host = 'localhost';
-$user = 'ユーザー名';
-$password = 'パスワード';
-$dbname = 'xs980818_noralive';  // 実際のDB名に合わせてください
+$dbname = 'xs980818_noralive';
+$user = 'xs980818_yasu';         // ← 修正済みユーザー名
+$password = 'pokopixgvp';     
+
 $conn = new mysqli($host, $user, $password, $dbname);
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
@@ -25,7 +26,7 @@ $stmt->execute();
 $bandId = $stmt->insert_id;
 $stmt->close();
 
-// 2. event_datesからイベントID取得、なければ作成
+// 2. event_datesからイベントID取得または作成
 $stmt = $conn->prepare("SELECT id FROM event_dates WHERE event_date = ?");
 $stmt->bind_param("s", $preferredDate);
 $stmt->execute();
@@ -48,7 +49,7 @@ $stmt->bind_param("ii", $bandId, $eventId);
 $stmt->execute();
 $stmt->close();
 
-// 4. メンバー情報をmembersテーブルに登録
+// 4. メンバー情報を登録
 for ($i = 1; $i <= 7; $i++) {
     $memberKey = 'member' . $i;
     if (!empty($_POST[$memberKey])) {

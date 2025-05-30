@@ -1,9 +1,11 @@
 <?php
 // DB接続
 $host = 'localhost';
-$user = 'ユーザー名';
-$password = 'パスワード';
-$dbname = 'xs980818_noralive';  // 実際のDB名に合わせてください
+$dbname = 'xs980818_noralive';
+$user = 'xs980818_yasu';         // ← 修正済みユーザー名
+$password = 'pokopixgvp';     
+
+
 $conn = new mysqli($host, $user, $password, $dbname);
 if ($conn->connect_error) {
     die("接続失敗: " . $conn->connect_error);
