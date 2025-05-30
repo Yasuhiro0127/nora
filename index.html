@@ -279,6 +279,16 @@
             box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
         }
 
+        select option {
+            background: #2a2a2a;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        select option:hover {
+            background: #3a3a3a;
+        }
+
         input::placeholder,
         textarea::placeholder {
             color: rgba(255, 255, 255, 0.6);
@@ -464,26 +474,33 @@
                             width="100%" height="200">
                         <div class="play-button-overlay"></div>
                     </div>
-                    <h3>第12回 野良ライヴ</h3>
-                    <p>2024年12月 - 渋谷CLUB QUATTRO</p>
-                    <p>今年最後のライブは大盛況でした！</p>
+                    <h3>第○○回 野良ライヴ</h3>
+                    <p>○○年○○月 - ○○</p>
+                    <p>ライブは大盛況でした！</p>
                 </div>
 
                 <div class="video-card">
-                    <div class="video-placeholder">
-                        <div class="play-button" onclick="openVideoModal('video2')"></div>
+                    <div class="video-placeholder"
+                        onclick="this.innerHTML='<iframe width=&quot;100%&quot; height=&quot;200&quot; src=&quot;https://www.youtube.com/embed/9mG9wi-TNV8?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen></iframe>'">
+                        <img src="https://img.youtube.com/vi/9mG9wi-TNV8/hqdefault.jpg" alt="第12回 野良ライヴ サムネイル"
+                            width="100%" height="200">
+                        <div class="play-button-overlay"></div>
                     </div>
-                    <h3>第11回 野良ライヴ</h3>
-                    <p>2024年10月 - 新宿ReNY</p>
-                    <p>アコースティック特集回</p>
+                    <h3>第○○回 野良ライヴ</h3>
+                    <p>○○年○○月 - ○○</p>
+                    <p>ライブは大盛況でした！</p>
                 </div>
+
                 <div class="video-card">
-                    <div class="video-placeholder">
-                        <div class="play-button" onclick="openVideoModal('video3')"></div>
+                    <div class="video-placeholder"
+                        onclick="this.innerHTML='<iframe width=&quot;100%&quot; height=&quot;200&quot; src=&quot;https://www.youtube.com/embed/9mG9wi-TNV8?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen></iframe>'">
+                        <img src="https://img.youtube.com/vi/9mG9wi-TNV8/hqdefault.jpg" alt="第12回 野良ライヴ サムネイル"
+                            width="100%" height="200">
+                        <div class="play-button-overlay"></div>
                     </div>
-                    <h3>第10回 野良ライヴ</h3>
-                    <p>2024年8月 - 下北沢SHELTER</p>
-                    <p>記念すべき10回目！</p>
+                    <h3>第○○回 野良ライヴ</h3>
+                    <p>○○年○○月 - ○○</p>
+                    <p>ライブは大盛況でした！</p>
                 </div>
             </div>
         </div>
@@ -506,10 +523,9 @@
                         <label for="preferredDate">参加希望日</label>
                         <select id="preferredDate" name="preferredDate" required>
                             <option value="">選択してください</option>
-                            <option value="2025-06-15">2025年6月15日（土）</option>
-                            <option value="2025-07-20">2025年7月20日（土）</option>
-                            <option value="2025-08-17">2025年8月17日（土）</option>
-                            <option value="2025-09-21">2025年9月21日（土）</option>
+                            <option value="2025-07-13">2025/7/13</option>
+                            <option value="2025-08-17">2025/8/17</option>
+                            <option value="2025-09-07">2025/9/7</option>
                         </select>
                     </div>
                     <div class="form-group">
