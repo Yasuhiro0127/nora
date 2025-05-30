@@ -1,26 +1,28 @@
 <?php
+// DB接続
 $host = 'localhost';
-$dbname = 'xs980818_noralive';
-$username = 'xs980818';
-$password = 'pokopixgvp';
-
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    $stmt = $pdo->prepare("INSERT INTO audiences (email, name, name_kana, event_date, target_band, ticket_count)
-                           VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->execute([
-        $_POST['audienceEmail'],
-        $_POST['audienceName'],
-        $_POST['audienceNameKana'],
-        $_POST['eventDate'],
-        $_POST['targetBand'] ?? null,
-        $_POST['ticketCount']
-    ]);
-
-    echo "観客申し込みが完了しました。";
-} catch (PDOException $e) {
-    echo "エラー: " . $e->getMessage();
+$user = 'ユーザー名';
+$password = 'パスワード';
+$dbname = 'xs980818_noralive';  // 実際のDB名に合わせてください
+$conn = new mysqli($host, $user, $password, $dbname);
+if ($conn->connect_error) {
+    die("接続失敗: " . $conn->connect_error);
 }
+
+// フォームデータ取得
+$email = $_POST['audienceEmail'];
+$name = $_POST['audienceName'];
+$kana = $_POST['audienceNameKana'];
+$eventDate = $_POST['eventDate'];
+$targetBand = $_POST['targetBand'];
+$ticketCount = $_POST['ticketCount'];
+
+// audiencesテーブルに登録
+$stmt = $conn->prepare("INSERT INTO audiences (email, name, kana, event_date, target_band, ticket_count) VALUES (?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("sssssi", $email, $name, $kana, $eventDate, $targetBand, $ticketCount);
+$stmt->execute();
+$stmt->close();
+
+$conn->close();
+echo "観客申し込みが完了しました。";
 ?>
