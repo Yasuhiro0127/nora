@@ -1,66 +1,68 @@
 <?php
-// DB接続
 $host = 'localhost';
 $dbname = 'xs980818_noralive';
-$user = 'xs980818_yasu';         // ← 修正済みユーザー名
-$password = 'pokopixgvp';     
+$username = 'xs980818_yasu';
+$password = 'pokopixgvp';
 
-$conn = new mysqli($host, $user, $password, $dbname);
-if ($conn->connect_error) {
-    die("接続失敗: " . $conn->connect_error);
-}
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
 
-// フォームデータ取得
-$bandName = $_POST['bandName'];
-$bandNameKana = $_POST['bandNameKana'];
-$preferredDate = $_POST['preferredDate'];
-$performanceTime = $_POST['performanceTime'];
-$representativeName = $_POST['representativeName'];
-$lineId = $_POST['lineId'];
-$organization = $_POST['organization'] ?? "";
+    // POSTデータ取得
+    $bandName = $_POST['bandName'];
+    $bandNameKana = $_POST['bandNameKana'];
+    $preferredDate = $_POST['preferredDate'];
+    $performanceTime = $_POST['performanceTime'];
+    $representativeName = $_POST['representativeName'];
+    $lineId = $_POST['lineId'];
+    $organization = $_POST['organization'];
 
-// 1. bandsテーブルに登録
-$stmt = $conn->prepare("INSERT INTO bands (name, kana, representative_name, line_id, organization, performance_time) VALUES (?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssssi", $bandName, $bandNameKana, $representativeName, $lineId, $organization, $performanceTime);
-$stmt->execute();
-$bandId = $stmt->insert_id;
-$stmt->close();
+    $pdo->beginTransaction();
 
-// 2. event_datesからイベントID取得または作成
-$stmt = $conn->prepare("SELECT id FROM event_dates WHERE event_date = ?");
-$stmt->bind_param("s", $preferredDate);
-$stmt->execute();
-$result = $stmt->get_result();
+    // 1. 同名バンドが存在するかチェック
+    $stmt = $pdo->prepare("SELECT id FROM bands WHERE name = ? AND kana = ? AND organization = ?");
+    $stmt->execute([$bandName, $bandNameKana, $organization]);
+    $bandId = $stmt->fetchColumn();
 
-if ($row = $result->fetch_assoc()) {
-    $eventId = $row['id'];
-} else {
-    $stmt2 = $conn->prepare("INSERT INTO event_dates (event_date, location) VALUES (?, '')");
-    $stmt2->bind_param("s", $preferredDate);
-    $stmt2->execute();
-    $eventId = $stmt2->insert_id;
-    $stmt2->close();
-}
-$stmt->close();
-
-// 3. 中間テーブルに出演情報を登録
-$stmt = $conn->prepare("INSERT INTO band_event_entries (band_id, event_id) VALUES (?, ?)");
-$stmt->bind_param("ii", $bandId, $eventId);
-$stmt->execute();
-$stmt->close();
-
-// 4. メンバー情報を登録
-for ($i = 1; $i <= 7; $i++) {
-    $memberKey = 'member' . $i;
-    if (!empty($_POST[$memberKey])) {
-        $memberName = $_POST[$memberKey];
-        $stmt = $conn->prepare("INSERT INTO members (band_id, name) VALUES (?, ?)");
-        $stmt->bind_param("is", $bandId, $memberName);
-        $stmt->execute();
-        $stmt->close();
+    if (!$bandId) {
+        // 新規バンド登録
+        $stmt = $pdo->prepare("INSERT INTO bands (name, kana, organization) VALUES (?, ?, ?)");
+        $stmt->execute([$bandName, $bandNameKana, $organization]);
+        $bandId = $pdo->lastInsertId();
     }
-}
 
-$conn->close();
-echo "バンド申し込みが完了しました。";
+    // 2. イベント日が存在するか確認（なければ追加）
+    $stmt = $pdo->prepare("SELECT id FROM event_dates WHERE event_date = ?");
+    $stmt->execute([$preferredDate]);
+    $eventId = $stmt->fetchColumn();
+
+    if (!$eventId) {
+        $stmt = $pdo->prepare("INSERT INTO event_dates (event_date) VALUES (?)");
+        $stmt->execute([$preferredDate]);
+        $eventId = $pdo->lastInsertId();
+    }
+
+    // 3. 中間テーブルに登録（イベントごとの演奏時間・代表者情報含む）
+    $stmt = $pdo->prepare("
+        INSERT INTO band_event_entries 
+        (band_id, event_id, performance_time, representative_name, line_id)
+        VALUES (?, ?, ?, ?, ?)
+    ");
+    $stmt->execute([$bandId, $eventId, $performanceTime, $representativeName, $lineId]);
+
+    // 4. メンバー登録（最大7人）
+    for ($i = 1; $i <= 7; $i++) {
+        $member = $_POST["member$i"] ?? '';
+        if (!empty($member)) {
+            $stmt = $pdo->prepare("INSERT INTO members (band_id, name) VALUES (?, ?)");
+            $stmt->execute([$bandId, $member]);
+        }
+    }
+
+    $pdo->commit();
+    echo "🎉 登録完了しました！";
+
+} catch (Exception $e) {
+    $pdo->rollBack();
+    echo "エラー: " . $e->getMessage();
+}
 ?>
