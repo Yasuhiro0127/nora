@@ -16,6 +16,9 @@ try {
     $lineId = $_POST['lineId'];
     $organization = $_POST['organization'];
 
+
+
+
     $pdo->beginTransaction();
 
     // 1. 同名バンドが存在するかチェック
