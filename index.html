@@ -219,7 +219,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Video Section */
+        /* Video Section - 修正版 */
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -241,20 +241,59 @@
             box-shadow: 0 20px 40px rgba(255, 107, 107, 0.2);
         }
 
-        .video-placeholder {
+        /* 動画のアスペクト比を維持するためのコンテナ */
+        .video-container {
+            position: relative;
             width: 100%;
-            height: 200px;
+            padding-bottom: 56.25%; /* 16:9のアスペクト比 */
+            height: 0;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(45deg, #333, #555);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: linear-gradient(45deg, #333, #555);
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
-            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
             overflow: hidden;
         }
 
+        .video-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .video-placeholder:hover img {
+            transform: scale(1.05);
+        }
+
         .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 60px;
             height: 60px;
             background: rgba(255, 107, 107, 0.9);
@@ -264,11 +303,12 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            z-index: 2;
         }
 
         .play-button:hover {
             background: rgba(255, 107, 107, 1);
-            transform: scale(1.1);
+            transform: translate(-50%, -50%) scale(1.1);
         }
 
         .play-button::after {
@@ -392,31 +432,6 @@
             color: #ff6b6b;
         }
 
-        .play-button-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 60px;
-            height: 60px;
-            margin-top: -30px;
-            margin-left: -30px;
-            background: rgba(255, 107, 107, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            pointer-events: none;
-        }
-
-        .play-button-overlay::after {
-            content: '▶';
-            margin-left: 3px;
-        }
-
-
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -516,7 +531,7 @@
     <section id="next-bands" class="section">
         <div class="container">
             <div class="next-bands-section">
-                <h3>次回のバンド</h3>
+                <h3>次回のライブ</h3>
                 <div class="next-bands-image">
                     <img src="next-bands.png" alt="次回のバンド情報" 
                          onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; text-align: center;\'><p>画像を読み込み中...</p><p style=\'font-size: 0.9rem; opacity: 0.7; margin-top: 1rem;\'>画像が表示されない場合は、ブラウザを更新してください</p></div>';" />
@@ -529,41 +544,32 @@
         <div class="container">
             <h2>過去の動画</h2>
             <div class="video-grid">
-                <!-- youtubeはここから -->
                 <div class="video-card">
-                    <div class="video-placeholder"
-                        onclick="this.innerHTML='<iframe width=&quot;100%&quot; height=&quot;200&quot; src=&quot;https://www.youtube.com/embed/9mG9wi-TNV8?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen></iframe>'">
-                        <img src="https://img.youtube.com/vi/9mG9wi-TNV8/hqdefault.jpg" alt="第12回 野良ライヴ サムネイル"
-                            width="100%" height="200">
-                        <div class="play-button-overlay"></div>
+                    <div class="video-container">
+                        <div class="video-placeholder" onclick="loadVideo(this, '-OSoQ8Hll-c')">
+                            <img src="https://img.youtube.com/vi/-OSoQ8Hll-c/maxresdefault.jpg" 
+                                 alt="第13回 野良ライヴ サムネイル"
+                                 onerror="this.src='https://img.youtube.com/vi/-OSoQ8Hll-c/hqdefault.jpg'; this.onerror=function(){this.style.display='none'; this.parentElement.style.background='linear-gradient(45deg, #333, #555)'; this.parentElement.innerHTML += '<div style=\'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; z-index: 1;\'><div style=\'font-size: 3rem; margin-bottom: 1rem;\'>🎵</div><div>第13回 野良ライヴ</div></div><div class=play-button></div>';}">
+                            <div class="play-button"></div>
+                        </div>
                     </div>
-                    <h3>第○○回 野良ライヴ</h3>
-                    <p>○○年○○月 - ○○</p>
-                    <p>ライブは大盛況でした！</p>
+                    <h3>vol1-全編 野良ライヴ</h3>
+                    <!-- <p>2025年6月 - 吉祥寺シアター</p> -->
+                    <!-- <p>最高の熱気とともに幕を閉じました！</p> -->
                 </div>
-
+                
                 <div class="video-card">
-                    <div class="video-placeholder"
-                        onclick="this.innerHTML='<iframe width=&quot;100%&quot; height=&quot;200&quot; src=&quot;https://www.youtube.com/embed/9mG9wi-TNV8?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen></iframe>'">
-                        <img src="https://img.youtube.com/vi/9mG9wi-TNV8/hqdefault.jpg" alt="第12回 野良ライヴ サムネイル"
-                            width="100%" height="200">
-                        <div class="play-button-overlay"></div>
+                    <div class="video-container">
+                        <div class="video-placeholder" onclick="loadVideo(this, 'qZ6xV0jFQpk')">
+                            <img src="https://img.youtube.com/vi/qZ6xV0jFQpk/maxresdefault.jpg" 
+                                 alt="第14回 野良ライヴ サムネイル"
+                                 onerror="this.src='https://img.youtube.com/vi/qZ6xV0jFQpk/hqdefault.jpg'; this.onerror=function(){this.style.display='none'; this.parentElement.style.background='linear-gradient(45deg, #333, #555)'; this.parentElement.innerHTML += '<div style=\'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; z-index: 1;\'><div style=\'font-size: 3rem; margin-bottom: 1rem;\'>🎵</div><div>第14回 野良ライヴ</div></div><div class=play-button></div>';}">
+                            <div class="play-button"></div>
+                        </div>
                     </div>
-                    <h3>第○○回 野良ライヴ</h3>
-                    <p>○○年○○月 - ○○</p>
-                    <p>ライブは大盛況でした！</p>
-                </div>
-
-                <div class="video-card">
-                    <div class="video-placeholder"
-                        onclick="this.innerHTML='<iframe width=&quot;100%&quot; height=&quot;200&quot; src=&quot;https://www.youtube.com/embed/9mG9wi-TNV8?autoplay=1&quot; frameborder=&quot;0&quot; allowfullscreen></iframe>'">
-                        <img src="https://img.youtube.com/vi/9mG9wi-TNV8/hqdefault.jpg" alt="第12回 野良ライヴ サムネイル"
-                            width="100%" height="200">
-                        <div class="play-button-overlay"></div>
-                    </div>
-                    <h3>第○○回 野良ライヴ</h3>
-                    <p>○○年○○月 - ○○</p>
-                    <p>ライブは大盛況でした！</p>
+                    <h3>vol2-全編 野良ライヴ</h3>
+                    <!-- <p>2025年6月 - 高円寺HIGH</p> -->
+                    <!-- <p>素晴らしいパフォーマンスでした！</p> -->
                 </div>
             </div>
         </div>
@@ -737,6 +743,12 @@
     </div>
 
     <script>
+        // 動画を読み込む関数
+        function loadVideo(element, videoId) {
+            const videoContainer = element.parentElement;
+            videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+        }
+
         // Smooth scrolling for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -771,17 +783,17 @@
 
             switch (videoId) {
                 case 'video1':
-                    modalTitle.textContent = '第12回 野良ライヴ';
-                    modalDescription.textContent = '2024年12月、渋谷CLUB QUATTROで開催された今年最後のライブ。8組のアーティストが熱いパフォーマンスを披露しました。';
+                    modalTitle.textContent = 'vol1-全編 野良ライヴ';
+                    // modalDescription.textContent = '2024年12月、渋谷CLUB QUATTROで開催された今年最後のライブ。8組のアーティストが熱いパフォーマンスを披露しました。';
                     break;
                 case 'video2':
-                    modalTitle.textContent = '第11回 野良ライヴ';
-                    modalDescription.textContent = '2024年10月、新宿ReNYでのアコースティック特集回。落ち着いた雰囲気の中で素晴らしい音楽をお届けしました。';
+                    modalTitle.textContent = 'vol2-全編 野良ライヴ';
+                    // modalDescription.textContent = '2024年10月、新宿ReNYでのアコースティック特集回。落ち着いた雰囲気の中で素晴らしい音楽をお届けしました。';
                     break;
-                case 'video3':
-                    modalTitle.textContent = '第10回 野良ライヴ';
-                    modalDescription.textContent = '2024年8月、下北沢SHELTERで開催された記念すべき10回目。多くのファンの皆様にお越しいただきました。';
-                    break;
+                // case 'video3':
+                //     modalTitle.textContent = '第10回 野良ライヴ';
+                //     modalDescription.textContent = '2024年8月、下北沢SHELTERで開催された記念すべき10回目。多くのファンの皆様にお越しいただきました。';
+                //     break;
             }
 
             modal.style.display = 'block';
