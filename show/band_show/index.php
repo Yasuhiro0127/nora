@@ -6,10 +6,16 @@ try {
     $password = 'pokopixgvp';
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
 
-    if ($_GET['sort'] == "サンプル1") {
-        $sql = "SELECT * FROM `bands `";
-
+    if (isset($_GET['sort'])){
+        if ($_GET['sort'] == "サンプル1") {
+            $sql = "SELECT *
+            FROM bands
+            LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
+            LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id;";
+    
+        }
     }
+
 
     // $sql = "SELECT * FROM `bands`";
     $stmt = $pdo->query($sql);
@@ -47,6 +53,7 @@ try {
         </tr>
         <?php foreach ($bands as $row): ?>
             <tr>
+                <td><?php echo htmlspecialchars($row['event_dates.event_date']); ?></td>
                 <td><?php echo htmlspecialchars($row['name']); ?></td>
                 <td><?php echo htmlspecialchars($row['organization']); ?>人</td>
             </tr>

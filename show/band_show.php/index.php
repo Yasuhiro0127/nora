@@ -6,11 +6,30 @@ try {
     $password = 'pokopixgvp';
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
 
-    if ($_GET['sort'] == "サンプル1") {
-        $sql = "SELECT * FROM `bands `";
+    if (isset($_GET['sort'])) {
+        if ($_GET['sort'] == "ライブ日昇順") {
+            $sql = "SELECT *
+            FROM bands
+            LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
+            LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id ORDER BY event_date DESC;";
 
+        } else {
+            $sql = "SELECT *
+            FROM bands
+            LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
+            LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id ;";
+
+        }
     }
 
+
+    // $sql = "SELECT 
+    // bands.name, 
+    // bands.organization, 
+    // event_dates.event_date 
+    // FROM bands
+    // LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
+    // LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id;";
     // $sql = "SELECT * FROM `bands`";
     $stmt = $pdo->query($sql);
     $bands = $stmt->fetchAll(PDO::FETCH_ASSOC); // データを配列に保持
@@ -42,12 +61,15 @@ try {
     <h1>バンド一覧</h1>
     <table border="1">
         <tr>
-            <th>名前</th>
-            <th>人数</th>
+            <th>申込日</th>
+            <th>ライブ日</th>
+            <th>バンド名</th>
+            <th>所属団体</th>
         </tr>
         <?php foreach ($bands as $row): ?>
             <tr>
-                <td><?php echo htmlspecialchars($row['name']); ?></td>
+                <td><?php echo htmlspecialchars($row['time']); ?></t>
+                <td><?php echo htmlspecialchars($row['event_date']); ?></td>
                 <td><?php echo htmlspecialchars($row['name']); ?></td>
                 <td><?php echo htmlspecialchars($row['organization']); ?>人</td>
             </tr>
