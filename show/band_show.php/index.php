@@ -6,6 +6,14 @@ try {
     $password = 'pokopixgvp';
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
 
+    $sql = "SELECT *
+    FROM bands
+    LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
+    LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id;";
+    
+    $params = [];
+
+
     if (isset($_GET['sort'])) {
         if ($_GET['sort'] == "ライブ日昇順") {
             $sql = "SELECT *
@@ -22,16 +30,21 @@ try {
         }
     }
 
+    if (isset($_GET["name_search"])) {
+        $sql = "SELECT *
+        FROM bands
+        LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
+        LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id WHERE name = :name;";
+        $params = [':name' => $_GET['name_search']];
 
-    // $sql = "SELECT 
-    // bands.name, 
-    // bands.organization, 
-    // event_dates.event_date 
-    // FROM bands
-    // LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
-    // LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id;";
-    // $sql = "SELECT * FROM `bands`";
-    $stmt = $pdo->query($sql);
+    }
+
+
+
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    // $stmt
     $bands = $stmt->fetchAll(PDO::FETCH_ASSOC); // データを配列に保持
 } catch (PDOException $e) {
     echo "エラー: " . $e->getMessage();
@@ -48,6 +61,7 @@ try {
 </head>
 
 <body>
+    <!-- ソートフォーム -->
     <form action="" method="get">
         <label>並び替えの順番を選んでください</label><br>
         <select name="sort">
@@ -56,6 +70,13 @@ try {
             <option value="バンド名昇順">バンド名昇順</option>
         </select>
         <button type="submit" class="submit-btn">申し込む</button>
+    </form>
+
+    <!-- 検索フォーム -->
+    <form action="" method="get">
+        <label for="name_search">検索するバンド名を入力してください:</label><br>
+        <input type="text" id="name" name="name_search"><br><br>
+        <input type="submit" value="送信">
     </form>
 
     <h1>バンド一覧</h1>
@@ -71,12 +92,17 @@ try {
                 <td><?php echo htmlspecialchars($row['time']); ?></t>
                 <td><?php echo htmlspecialchars($row['event_date']); ?></td>
                 <td><?php echo htmlspecialchars($row['name']); ?></td>
-                <td><?php echo htmlspecialchars($row['organization']); ?>人</td>
+                <td><?php echo htmlspecialchars($row['organization']); ?></td>
             </tr>
         <?php endforeach; ?>
     </table>
-    <?php echo $_GET['sort']
-        ?>
+    <?php
+    if (isset($_GET['sort'])) {
+        echo $_GET['sort'];
+
+    }
+
+    ?>
 </body>
 
 </html>
