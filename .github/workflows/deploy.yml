@@ -3,7 +3,7 @@ name: Deploy to Xserver
 on:
   push:
     branches:
-      - main
+      - main  # main ブランチに push されたときに実行
 
 jobs:
   deploy:
@@ -19,5 +19,5 @@ jobs:
         server: ${{ secrets.FTP_HOST }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: public_html/
-        local-dir: ./  # 必要に応じて dist/ に変更可能
+        server-dir: ./        # ← これでpublic_html直下にアップされる
+        local-dir: ./         # リポジトリのルートフォルダ全体をアップ
