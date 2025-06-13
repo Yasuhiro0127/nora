@@ -14,10 +14,10 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Upload to Xserver via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ${{ secrets.FTP_HOST }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         server-dir: public_html/
-        local-dir: ./  # dist/ にしたい場合はここを変える
+        local-dir: ./  # 必要に応じて dist/ に変更可能
