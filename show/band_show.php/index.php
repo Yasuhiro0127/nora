@@ -6,23 +6,42 @@ try {
     $password = 'pokopixgvp';
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
 
-    $sql = "SELECT *
+    $sql = "SELECT 
+    bands.time AS time,
+    bands.name AS name,
+    bands.organization AS organization,
+    event_dates.event_date AS event_date,
+    band_event_entries.id AS  event_entries_id,
+    event_dates.id AS event_dates_id
+    
     FROM bands
     LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
     LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id;";
-    
+
     $params = [];
 
 
     if (isset($_GET['sort'])) {
         if ($_GET['sort'] == "ライブ日昇順") {
-            $sql = "SELECT *
+            $sql = "SELECT
+            bands.time AS time,
+            bands.name AS name,
+            bands.organization AS organization,
+            event_dates.event_date AS event_date,
+            band_event_entries.id AS  event_entries_id,
+            event_dates.id AS event_dates_id
             FROM bands
             LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
             LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id ORDER BY event_date DESC;";
 
         } else {
-            $sql = "SELECT *
+            $sql = "SELECT 
+            bands.time AS time,
+            bands.name AS name,
+            bands.organization AS organization,
+            event_dates.event_date AS event_date,
+            band_event_entries.id AS  event_entries_id,
+            event_dates.id AS event_dates_id
             FROM bands
             LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
             LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id ;";
@@ -31,7 +50,13 @@ try {
     }
 
     if (isset($_GET["name_search"])) {
-        $sql = "SELECT *
+        $sql = "SELECT 
+        bands.time AS time,
+        bands.name AS name,
+        bands.organization AS organization,
+        event_dates.event_date AS event_date,
+        band_event_entries.id AS  event_entries_id,
+        event_dates.id AS event_dates_id
         FROM bands
         LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
         LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id WHERE name = :name;";
@@ -57,6 +82,7 @@ try {
 
 <head>
     <meta charset="UTF-8">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> -->
     <title>バンド一覧</title>
 </head>
 
@@ -80,29 +106,34 @@ try {
     </form>
 
     <h1>バンド一覧</h1>
-    <table border="1">
-        <tr>
-            <th>申込日</th>
-            <th>ライブ日</th>
-            <th>バンド名</th>
-            <th>所属団体</th>
-        </tr>
-        <?php foreach ($bands as $row): ?>
+    <div class="band_table">
+        <table border="1">
             <tr>
-                <td><?php echo htmlspecialchars($row['time']); ?></t>
-                <td><?php echo htmlspecialchars($row['event_date']); ?></td>
-                <td><?php echo htmlspecialchars($row['name']); ?></td>
-                <td><?php echo htmlspecialchars($row['organization']); ?></td>
+                <th>申込日</th>
+                <th>ライブ日</th>
+                <th>バンド名</th>
+                <th>所属団体</th>
             </tr>
-        <?php endforeach; ?>
-    </table>
-    <?php
-    if (isset($_GET['sort'])) {
-        echo $_GET['sort'];
+            <?php foreach ($bands as $row): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($row['time']); ?></td>
+                    <td><a
+                            href="https://noralive.net/show/event_detail/index.php?id=<?php echo htmlspecialchars($row['event_dates_id']); ?>"><?php echo htmlspecialchars($row['event_date']); ?></a>
+                    </td>
+                    <td><?php echo htmlspecialchars($row['name']); ?></td>
+                    <td><?php echo htmlspecialchars($row['organization']); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
 
-    }
-
-    ?>
+    <!-- <?php
+    // if (isset($_GET['sort'])) {
+    //     echo $_GET['sort'];
+    
+    // }
+    
+    ?> -->
 </body>
 
 </html>
