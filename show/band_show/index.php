@@ -118,6 +118,12 @@ try {
         <input type="submit" value="送信">
     </form>
 
+    <form action="" method="get">
+        <label for="date_search">検索する日付を入力してください:</label><br>
+        <input type="date" id="date_search" name="date_search"><br><br>
+        <input type="submit" value="送信">
+    </form>
+
     <h1>バンド一覧</h1>
     <div class="band_table">
         <table border="1">
