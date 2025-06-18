@@ -93,7 +93,7 @@ try {
         LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id WHERE event_dates.event_date = :event_date;";
         $params = [':event_date' => $_GET['date_search']];
     }
-        
+
 
 
 
@@ -113,8 +113,34 @@ try {
 
 <head>
     <meta charset="UTF-8">
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>バンド一覧</title>
+    <style>
+        .band_table {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+
+            th,
+            td {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 
 <body>
