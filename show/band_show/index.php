@@ -12,7 +12,7 @@ try {
     bands.organization AS organization,
     event_dates.event_date AS event_date,
     band_event_entries.id AS  event_entries_id,
-    event_dates.id AS event_dates_id
+    event_dates.id AS event_dates_id,
     band_event_entries.representative_name AS representative_name,
     band_event_entries.line_id AS line_id,
     band_event_entries.performance_time AS performance_time
@@ -33,7 +33,7 @@ try {
             bands.organization AS organization,
             event_dates.event_date AS event_date,
             band_event_entries.id AS  event_entries_id,
-            event_dates.id AS event_dates_id
+            event_dates.id AS event_dates_id,
             band_event_entries.representative_name AS representative_name,
             band_event_entries.line_id AS line_id,
             band_event_entries.performance_time AS performance_time
@@ -48,7 +48,7 @@ try {
             bands.organization AS organization,
             event_dates.event_date AS event_date,
             band_event_entries.id AS  event_entries_id,
-            event_dates.id AS event_dates_id
+            event_dates.id AS event_dates_id,
             band_event_entries.representative_name AS representative_name,
             band_event_entries.line_id AS line_id,
             band_event_entries.performance_time AS performance_time
@@ -66,7 +66,7 @@ try {
         bands.organization AS organization,
         event_dates.event_date AS event_date,
         band_event_entries.id AS  event_entries_id,
-        event_dates.id AS event_dates_id
+        event_dates.id AS event_dates_id,
         band_event_entries.representative_name AS representative_name,
         band_event_entries.line_id AS line_id,
         band_event_entries.performance_time AS performance_time
