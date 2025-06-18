@@ -77,6 +77,24 @@ try {
 
     }
 
+    if (isset($_GET['date_search'])) {
+        $sql = "SELECT 
+        bands.time AS time,
+        bands.name AS name,
+        bands.organization AS organization,
+        event_dates.event_date AS event_date,
+        band_event_entries.id AS  event_entries_id,
+        event_dates.id AS event_dates_id,
+        band_event_entries.representative_name AS representative_name,
+        band_event_entries.line_id AS line_id,
+        band_event_entries.performance_time AS performance_time
+        FROM bands
+        LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
+        LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id WHERE event_dates.event_date = :event_date;";
+        $params = [':event_date' => $_GET['date_search']];
+    }
+        
+
 
 
 
@@ -115,6 +133,12 @@ try {
     <form action="" method="get">
         <label for="name_search">検索するバンド名を入力してください:</label><br>
         <input type="text" id="name" name="name_search"><br><br>
+        <input type="submit" value="送信">
+    </form>
+
+    <form action="" method="get">
+        <label for="date_search">検索する日付を入力してください:</label><br>
+        <input type="date" id="date_search" name="date_search"><br><br>
         <input type="submit" value="送信">
     </form>
 
