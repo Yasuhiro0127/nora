@@ -90,8 +90,8 @@ try {
         band_event_entries.performance_time AS performance_time
         FROM bands
         LEFT JOIN band_event_entries ON bands.id = band_event_entries.band_id
-        LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id WHERE event_dates.id = :event_dates_id;";
-        $params = [':event_dates_id' => $_GET['date_search']];
+        LEFT JOIN event_dates ON band_event_entries.event_id = event_dates.id WHERE event_dates.event_date = :event_date;";
+        $params = [':event_date' => $_GET['date_search']];
     }
         
 
