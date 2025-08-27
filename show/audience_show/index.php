@@ -6,7 +6,7 @@ try {
     $password = 'pokopixgvp';
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
 
-    $sql = "SELECT id, email, name, kana, event_date, target_band, ticket_count, time FROM audiences";
+    $sql = "SELECT id, email, name, kana, event_date, target_band, ticket_count FROM audiences";
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
     $audiences = $stmt->fetchAll(PDO::FETCH_ASSOC);
