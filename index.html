@@ -166,48 +166,6 @@
             box-shadow: 0 15px 40px rgba(78, 205, 196, 0.5);
         }
 
-        /* 次回のバンド情報セクション */
-        .next-bands-section {
-            text-align: center;
-            width: 100%;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .next-bands-section h3 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            background: linear-gradient(45deg, #4ecdc4, #6bcf7f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
-        }
-
-        .next-bands-image {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto;
-            max-width: 100%;
-            position: relative;
-        }
-
-        .next-bands-image img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(78, 205, 196, 0.2);
-            transition: all 0.3s ease;
-            border: 2px solid rgba(78, 205, 196, 0.3);
-            display: block;
-        }
-
-        .next-bands-image img:hover {
-            transform: scale(1.02);
-            box-shadow: 0 25px 50px rgba(78, 205, 196, 0.3);
-            border-color: rgba(78, 205, 196, 0.5);
-        }
-
         /* Section Styles */
         .section {
             padding: 80px 0;
@@ -221,6 +179,39 @@
             background: linear-gradient(45deg, #ff6b6b, #ffd93d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        /* Attractions Section */
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .attraction-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .attraction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.2);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .attraction-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .attraction-card:hover img {
+            transform: scale(1.05);
         }
 
         /* Video Section - 修正版 */
@@ -460,17 +451,12 @@
                 min-width: 250px;
             }
 
-            .next-bands-section h3 {
-                font-size: 2rem;
-            }
-
-            .next-bands-image {
-                max-width: 100%;
-                padding: 0 1rem;
-            }
-
             .section h2 {
                 font-size: 2rem;
+            }
+
+            .attractions-grid {
+                grid-template-columns: 1fr;
             }
 
             .video-grid {
@@ -501,6 +487,43 @@
                 opacity: 0.5;
             }
         }
+
+        /* Slideshow Styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+        }
+
+        .slideshow-slide {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+
+        .slideshow-slide.active {
+            display: block;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0.4;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slideshow-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
     </style>
 </head>
 
@@ -511,7 +534,6 @@
                 <div class="logo">野良ライヴ</div>
                 <ul class="nav-links">
                     <li><a href="#home">ホーム</a></li>
-                    <li><a href="#videos">過去の動画</a></li>
                     <li><a href="#performer-apply">参加者応募</a></li>
                     <li><a href="#audience-apply">観客申し込み</a></li>
                 </ul>
@@ -522,8 +544,25 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <div style="margin-bottom: 2rem;">
-                    <img src="https://i.gyazo.com/dd4ca5a27c8c314cd8798c64839bbb5f.jpg" alt="野良ライヴロゴ" style="max-width: 600px; width: 100%; height: auto; border-radius: 15px; box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);">
+                <div class="slideshow-container">
+                    <div class="slideshow-slide active">
+                        <img src="https://i.gyazo.com/291b2b92eb6ca27884f1f2ef3e775b73.jpg" alt="野良ライヴ画像1">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/ba081492e493677298a7d51f1038c522.jpg" alt="野良ライヴ画像2">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/4527543bcda9fe091d0ef78fb795b569.jpg" alt="野良ライヴ画像3">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/47250e78dab9380577cfc61091b068ff.jpg" alt="野良ライヴ画像4">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/953eec659686307773a0ef83b05855b4.jpg" alt="野良ライヴ画像5">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/01d2e82b935b98ef81e88c46569dea83.jpg" alt="野良ライヴ画像6">
+                    </div>
                 </div>
                 <h1>野良ライヴ</h1>
                 <p>音楽で繋がる、新しいライブ体験</p>
@@ -535,48 +574,15 @@
         </div>
     </section>
 
-    <section id="next-bands" class="section">
+    <section id="attractions" class="section">
         <div class="container">
-            <div class="next-bands-section">
-                <h3>次回のライブ</h3>
-                <div class="next-bands-image">
-                    <img src="https://i.gyazo.com/9a9c96ac69ca99ceda32800539cd611a.jpg" alt="次回のバンド情報" 
-                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=\'background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; text-align: center;\'><p>画像を読み込み中...</p><p style=\'font-size: 0.9rem; opacity: 0.7; margin-top: 1rem;\'>画像が表示されない場合は、ブラウザを更新してください</p></div>';" />
+            <h2>野良ライヴの魅力</h2>
+            <div class="attractions-grid">
+                <div class="attraction-card">
+                    <img src="https://i.gyazo.com/fe31fd86f6105690c15056208c523e80.jpg" alt="野良ライヴの魅力1">
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="videos" class="section">
-        <div class="container">
-            <h2>過去の動画</h2>
-            <div class="video-grid">
-                <div class="video-card">
-                    <div class="video-container">
-                        <div class="video-placeholder" onclick="loadVideo(this, '-OSoQ8Hll-c')">
-                            <img src="https://img.youtube.com/vi/-OSoQ8Hll-c/maxresdefault.jpg" 
-                                 alt="第13回 野良ライヴ サムネイル"
-                                 onerror="this.src='https://img.youtube.com/vi/-OSoQ8Hll-c/hqdefault.jpg'; this.onerror=function(){this.style.display='none'; this.parentElement.style.background='linear-gradient(45deg, #333, #555)'; this.parentElement.innerHTML += '<div style=\'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; z-index: 1;\'><div style=\'font-size: 3rem; margin-bottom: 1rem;\'>🎵</div><div>第13回 野良ライヴ</div></div><div class=play-button></div>';}">
-                            <div class="play-button"></div>
-                        </div>
-                    </div>
-                    <h3>vol1-全編 野良ライヴ</h3>
-                    <!-- <p>2025年6月 - 吉祥寺シアター</p> -->
-                    <!-- <p>最高の熱気とともに幕を閉じました！</p> -->
-                </div>
-                
-                <div class="video-card">
-                    <div class="video-container">
-                        <div class="video-placeholder" onclick="loadVideo(this, 'qZ6xV0jFQpk')">
-                            <img src="https://img.youtube.com/vi/qZ6xV0jFQpk/maxresdefault.jpg" 
-                                 alt="第14回 野良ライヴ サムネイル"
-                                 onerror="this.src='https://img.youtube.com/vi/qZ6xV0jFQpk/hqdefault.jpg'; this.onerror=function(){this.style.display='none'; this.parentElement.style.background='linear-gradient(45deg, #333, #555)'; this.parentElement.innerHTML += '<div style=\'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; z-index: 1;\'><div style=\'font-size: 3rem; margin-bottom: 1rem;\'>🎵</div><div>第14回 野良ライヴ</div></div><div class=play-button></div>';}">
-                            <div class="play-button"></div>
-                        </div>
-                    </div>
-                    <h3>vol2-全編 野良ライヴ</h3>
-                    <!-- <p>2025年6月 - 高円寺HIGH</p> -->
-                    <!-- <p>素晴らしいパフォーマンスでした！</p> -->
+                <div class="attraction-card">
+                    <img src="https://i.gyazo.com/6b270e8f47ea4b7013e43510ffb47230.jpg" alt="野良ライヴの魅力2">
                 </div>
             </div>
         </div>
@@ -827,6 +833,20 @@
 
         // Initialize particles when page loads
         window.addEventListener('load', createParticles);
+
+        // Slideshow functionality
+        let slideIndex = 0;
+        function showSlides() {
+            const slides = document.querySelectorAll('.slideshow-slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+        window.addEventListener('load', showSlides);
 
         // Header scroll effect
         window.addEventListener('scroll', function () {
