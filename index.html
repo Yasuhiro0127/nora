@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>野良ライヴ - Official Website</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.5);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b6b;
+            text-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(circle at center, rgba(255, 107, 107, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f, #4ecdc4, #a8e6cf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+            }
+
+            to {
+                text-shadow: 0 0 30px rgba(255, 107, 107, 0.8), 0 0 40px rgba(255, 210, 61, 0.5);
+            }
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .cta-button.primary {
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .cta-button.secondary {
+            background: linear-gradient(45deg, #4ecdc4, #6bcf7f);
+            box-shadow: 0 10px 30px rgba(78, 205, 196, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+
+        .cta-button.primary:hover {
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.5);
+        }
+
+        .cta-button.secondary:hover {
+            box-shadow: 0 15px 40px rgba(78, 205, 196, 0.5);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Attractions Section */
+        .attractions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .attraction-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .attraction-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.2);
+            border-color: rgba(255, 107, 107, 0.3);
+        }
+
+        .attraction-card img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .attraction-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Video Section - 修正版 */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .video-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.2);
+        }
+
+        /* 動画のアスペクト比を維持するためのコンテナ */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9のアスペクト比 */
+            height: 0;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            background: linear-gradient(45deg, #333, #555);
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #333, #555);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .video-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .video-placeholder:hover img {
+            transform: scale(1.05);
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 107, 107, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .play-button:hover {
+            background: rgba(255, 107, 107, 1);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .play-button::after {
+            content: '▶';
+            color: white;
+            font-size: 1.5rem;
+            margin-left: 3px;
+        }
+
+        /* Form Styles */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ffd93d;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+        }
+
+        select option {
+            background: #2a2a2a;
+            color: #ffffff;
+            padding: 10px;
+        }
+
+        select option:hover {
+            background: #3a3a3a;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .cta-button {
+                min-width: 250px;
+            }
+
+            .section h2 {
+                font-size: 2rem;
+            }
+
+            .attractions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Floating particles effect */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ff6b6b;
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-100px) rotate(180deg);
+                opacity: 0.5;
+            }
+        }
+
+        /* Slideshow Styles */
+        .slideshow-container {
+            position: relative;
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+        }
+
+        .slideshow-slide {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+
+        .slideshow-slide.active {
+            display: block;
+            animation: fadeIn 1s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0.4;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .slideshow-slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">野良ライヴ</div>
+                <ul class="nav-links">
+                    <li><a href="#home">ホーム</a></li>
+                    <li><a href="#performer-apply">参加者応募</a></li>
+                    <li><a href="#audience-apply">観客申し込み</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="slideshow-container">
+                    <div class="slideshow-slide active">
+                        <img src="https://i.gyazo.com/291b2b92eb6ca27884f1f2ef3e775b73.jpg" alt="野良ライヴ画像1">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/ba081492e493677298a7d51f1038c522.jpg" alt="野良ライヴ画像2">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/4527543bcda9fe091d0ef78fb795b569.jpg" alt="野良ライヴ画像3">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/47250e78dab9380577cfc61091b068ff.jpg" alt="野良ライヴ画像4">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/953eec659686307773a0ef83b05855b4.jpg" alt="野良ライヴ画像5">
+                    </div>
+                    <div class="slideshow-slide">
+                        <img src="https://i.gyazo.com/01d2e82b935b98ef81e88c46569dea83.jpg" alt="野良ライヴ画像6">
+                    </div>
+                </div>
+                <h1>野良ライヴ</h1>
+                <p>音楽で繋がる、新しいライブ体験</p>
+                <div class="cta-buttons">
+                    <a href="#performer-apply" class="cta-button primary">ライブに応募</a>
+                    <a href="#audience-apply" class="cta-button secondary">観客の方はこちら</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="attractions" class="section">
+        <div class="container">
+            <h2>野良ライヴの魅力</h2>
+            <div class="attractions-grid">
+                <div class="attraction-card">
+                    <img src="https://i.gyazo.com/fe31fd86f6105690c15056208c523e80.jpg" alt="野良ライヴの魅力1">
+                </div>
+                <div class="attraction-card">
+                    <img src="https://i.gyazo.com/6b270e8f47ea4b7013e43510ffb47230.jpg" alt="野良ライヴの魅力2">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="performer-apply" class="section">
+        <div class="container">
+            <h2>バンド申し込み</h2>
+            <div class="form-container">
+                <form id="performerForm" action="band_submit.php" method="POST"  autocomplete="off">
+                    <div class="form-group">
+                        <label for="bandName">バンド名</label>
+                        <input type="text" id="bandName" name="bandName" placeholder="例: The Wild Cats" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bandNameKana">バンド名（カタカナ）</label>
+                        <input type="text" id="bandNameKana" name="bandNameKana" placeholder="例: ザ ワイルド キャッツ" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferredDate">参加希望日</label>
+                        <input type="date" id="preferredDate" name="preferredDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="performanceTime">演奏時間</label>
+                        <select id="performanceTime" name="performanceTime" required>
+                            <option value="">選択してください</option>
+                            <option value="5">5分</option>
+                            <option value="10">10分</option>
+                            <option value="15">15分</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="representativeName">代表者名</label>
+                        <input type="text" id="representativeName" name="representativeName" placeholder="山田太郎"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lineId">代表者LINE ID</label>
+                        <input type="text" id="lineId" name="lineId" placeholder="@example_line_id" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="organization">所属団体</label>
+                        <input type="text" id="organization" name="organization" placeholder="例: ○○大学軽音楽部、社会人バンドサークル等">
+                    </div>
+
+                    <h3 style="color: #ffd93d; margin: 2rem 0 1rem 0;">所属メンバー</h3>
+                    <div id="membersList">
+                        <div class="form-group">
+                            <label for="member1">メンバー1</label>
+                            <input type="text" id="member1" name="member1" placeholder="山田太郎" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="member2">メンバー2</label>
+                            <input type="text" id="member2" name="member2" placeholder="田中花子">
+                        </div>
+                        <div class="form-group">
+                            <label for="member3">メンバー3</label>
+                            <input type="text" id="member3" name="member3" placeholder="佐藤次郎">
+                        </div>
+                        <div class="form-group">
+                            <label for="member4">メンバー4</label>
+                            <input type="text" id="member4" name="member4" placeholder="鈴木三郎">
+                        </div>
+                        <div class="form-group">
+                            <label for="member5">メンバー5</label>
+                            <input type="text" id="member5" name="member5" placeholder="高橋四郎">
+                        </div>
+                        <div class="form-group">
+                            <label for="member6">メンバー6</label>
+                            <input type="text" id="member6" name="member6" placeholder="渡辺五郎">
+                        </div>
+                        <div class="form-group">
+                            <label for="member7">メンバー7</label>
+                            <input type="text" id="member7" name="member7" placeholder="中村六郎">
+                        </div>
+                    </div>
+
+                    <div class="terms-section"
+                        style="margin: 2rem 0; padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <h3 style="color: #ffd93d; margin-bottom: 1rem;">利用規約</h3>
+                        <div style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+                            <p style="margin-bottom: 1rem;"><strong>◎撮影・配信について</strong></p>
+                            <p style="margin-bottom: 1rem;">
+                                本ライブイベントでは、当日の様子を撮影し、その映像をYouTubeなどのオンラインプラットフォームにアップロードする場合があります。</p>
+                            <p style="margin-bottom: 1rem;">参加者は、申し込み時点でこれに同意したものとみなします。</p>
+                            <p style="margin-bottom: 1rem;">撮影された映像や音声は、プロモーションや記録として使用される可能性がありますので、あらかじめご了承ください。</p>
+                            <p style="margin-bottom: 1.5rem;">映像への出演を希望されない場合は、事前に運営までご相談ください。</p>
+
+                            <p style="margin-bottom: 1rem;"><strong>◎キャンセルポリシーについて</strong></p>
+                            <p style="margin-bottom: 1rem;">皆様により良いライブを提供するため、キャンセルポリシーを定めております。</p>
+                            <p style="margin-bottom: 0.5rem;">キャンセル料以下になります。</p>
+                            <p style="margin-bottom: 0.5rem;">応募後キャンセル：出演料の50%</p>
+                            <p style="margin-bottom: 0.5rem;">ライブ当日から</p>
+                            <p style="margin-bottom: 0.5rem;">1週間以内：出演料の200%</p>
+                            <p style="margin-bottom: 1rem;">1ヶ月以内：出演料の100%</p>
+                            <p>とさせていただきます。</p>
+                        </div>
+                        <div class="form-group">
+                            <label style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" required
+                                    style="margin-right: 10px; width: auto;">
+                                <span>上記の利用規約に同意します</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">申し込む</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="audience-apply" class="section">
+        <div class="container">
+            <h2>観客申し込み</h2>
+            <div class="form-container">
+                <form id="audienceForm" action="audience_submit.php" method="POST">
+                    <div class="form-group">
+                        <label for="audienceEmail">メールアドレス</label>
+                        <input type="email" id="audienceEmail" name="audienceEmail" placeholder="example@email.com"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="audienceName">名前</label>
+                        <input type="text" id="audienceName" name="audienceName" placeholder="山田花子" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="audienceNameKana">名前（カナ）</label>
+                        <input type="text" id="audienceNameKana" name="audienceNameKana" placeholder="ヤマダハナコ" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate">日付</label>
+                        <input type="date" id="eventDate" name="eventDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="targetBand">目的のバンド</label>
+                        <input type="text" id="targetBand" name="targetBand" placeholder="見たいバンド名があれば入力してください">
+                    </div>
+                    <div class="form-group">
+                        <label for="ticketCount">枚数</label>
+                        <select id="ticketCount" name="ticketCount" required>
+                            <option value="">選択してください</option>
+                            <option value="1">1枚</option>
+                            <option value="2">2枚</option>
+                            <option value="3">3枚</option>
+                            <option value="4">4枚</option>
+                            <option value="5">5枚</option>
+                            <option value="6">6枚</option>
+                            <option value="7">7枚</option>
+                            <option value="8">8枚</option>
+                            <option value="9">9枚</option>
+                            <option value="10">10枚以上</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="submit-btn">申し込む</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modalTitle">動画タイトル</h3>
+            <p id="modalDescription">ここに動画の説明が入ります。実際の動画プレーヤーを組み込むことができます。</p>
+        </div>
+    </div>
+
+    <script>
+        // 動画を読み込む関数
+        function loadVideo(element, videoId) {
+            const videoContainer = element.parentElement;
+            videoContainer.innerHTML = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allowfullscreen></iframe>`;
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 利用規約チェックの確認のみ残す
+        document.getElementById('performerForm').addEventListener('submit', function (e) {
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            if (!agreeTerms) {
+                e.preventDefault();
+                alert('利用規約への同意が必要です。');
+                return false;
+            }
+        });
+
+        // Video modal functionality
+        const modal = document.getElementById('videoModal');
+        const closeBtn = document.querySelector('.close');
+
+        function openVideoModal(videoId) {
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+
+            switch (videoId) {
+                case 'video1':
+                    modalTitle.textContent = 'vol1-全編 野良ライヴ';
+                    // modalDescription.textContent = '2024年12月、渋谷CLUB QUATTROで開催された今年最後のライブ。8組のアーティストが熱いパフォーマンスを披露しました。';
+                    break;
+                case 'video2':
+                    modalTitle.textContent = 'vol2-全編 野良ライヴ';
+                    // modalDescription.textContent = '2024年10月、新宿ReNYでのアコースティック特集回。落ち着いた雰囲気の中で素晴らしい音楽をお届けしました。';
+                    break;
+                // case 'video3':
+                //     modalTitle.textContent = '第10回 野良ライヴ';
+                //     modalDescription.textContent = '2024年8月、下北沢SHELTERで開催された記念すべき10回目。多くのファンの皆様にお越しいただきました。';
+                //     break;
+            }
+
+            modal.style.display = 'block';
+        }
+
+        closeBtn.onclick = function () {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Create floating particles
+        function createParticles() {
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                document.body.appendChild(particle);
+            }
+        }
+
+        // Initialize particles when page loads
+        window.addEventListener('load', createParticles);
+
+        // Slideshow functionality
+        let slideIndex = 0;
+        function showSlides() {
+            const slides = document.querySelectorAll('.slideshow-slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            slideIndex++;
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            slides[slideIndex - 1].classList.add('active');
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+        window.addEventListener('load', showSlides);
+
+        // Header scroll effect
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+    </script>
+</body>
+
+</html>
+
+<!-- html_test -->
