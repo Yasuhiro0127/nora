@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/lib/mailer.php';
+require_once __DIR__ . '/lib/mail_log.php';
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     http_response_code(405);
@@ -88,6 +89,27 @@ $body = implode("\n", $bodyLines);
 $mailOk = send_japanese_mail($email, $subject, $body, $fromEmail, $fromName, $replyTo);
 if (!$mailOk) {
     error_log('[audience_submit] auto-reply mail failed: to=' . $email);
+}
+
+// 送信履歴を保存（失敗しても申し込み自体は成功扱い）
+try {
+    $logPdo = mail_log_pdo_connect();
+    insert_mail_log(
+        $logPdo,
+        'audience',
+        $email,
+        $fromEmail,
+        $subject,
+        $mailOk,
+        [
+            'name' => $name,
+            'eventDate' => $eventDate,
+            'ticketCount' => $ticketCount,
+            'targetBand' => $targetBand,
+        ]
+    );
+} catch (Throwable $e) {
+    error_log('[audience_submit] mail log failed: ' . $e->getMessage());
 }
 
 echo "観客申し込みが完了しました。";

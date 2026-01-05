@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/lib/mailer.php';
+require_once __DIR__ . '/lib/mail_log.php';
 
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
 if ($method !== 'POST') {
@@ -119,6 +120,28 @@ try {
     $mailOk = send_japanese_mail($representativeEmail, $subject, $body, $fromEmail, $fromName, $replyTo);
     if (!$mailOk) {
         error_log('[band_submit] auto-reply mail failed: to=' . $representativeEmail);
+    }
+
+    // 送信履歴を保存（失敗しても登録は成功扱い）
+    try {
+        $logPdo = mail_log_pdo_connect();
+        insert_mail_log(
+            $logPdo,
+            'band',
+            $representativeEmail,
+            $fromEmail,
+            $subject,
+            $mailOk,
+            [
+                'bandName' => $bandName,
+                'preferredDate' => $preferredDate,
+                'performanceTime' => $performanceTime,
+                'representativeName' => $representativeName,
+                'lineId' => $lineId,
+            ]
+        );
+    } catch (Throwable $e) {
+        error_log('[band_submit] mail log failed: ' . $e->getMessage());
     }
 
     echo "🎉 登録完了しました！";
