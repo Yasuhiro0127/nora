@@ -1,6 +1,6 @@
 <?php
 try {
-    $host = 'localhost';
+    $host = '49.212.150.114';
     $dbname = 'xs980818_noralive';
     $username = 'xs980818_yasu';
     $password = 'pokopixgvp';
